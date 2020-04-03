@@ -1,140 +1,149 @@
 #  go-admin  
 
-![build](https://github.com/wenjianzhang/go-admin/workflows/build/badge.svg?branch=master)   ![license](https://img.shields.io/github/license/mashape/apistatus.svg) 
-
-
- English | [简体中文](./README.zh-CN.md)
+![build](https://github.com/wenjianzhang/go-admin/workflows/build/badge.svg)   ![license](https://img.shields.io/github/license/mashape/apistatus.svg) 
   
-##### Gin + Vue + Element UI based front-end and back-end separated permission management system
+  [English](./README.en.md) | 简体中文
+  
+
+##### 基于Gin + Vue + Element UI的前后端分离权限管理系统 
+
+系统初始化极度简单，只需要配置文件中，修改数据库连接，系统启动后会自动初始化数据库信息以及必须的基础数据
 
 
-## ✨ Feature
 
-- Follow RESTful API design specifications
+## ✨ 特性
 
-- Provides rich middleware support based on GIN WEB API framework (user authentication, cross domain, access log, tracking ID, etc.)
+- 遵循 RESTful API 设计规范
 
-- Casbin-based RBAC access control model
+- 基于 GIN WEB API 框架，提供了丰富的中间件支持（用户认证、跨域、访问日志、追踪ID等）
 
-- JWT certification
+- 基于Casbin的 RBAC 访问控制模型
 
-- Support Swagger documentation (based on swaggo)
+- JWT 认证
 
-- GORM-based database storage that can expand many types of databases
+- 支持 Swagger 文档(基于swaggo)
 
-- Simple model mapping of configuration files to quickly get the desired configuration
+- 基于 GORM 的数据库存储，可扩展多种类型数据库 
 
-- TODO: unit test
+- 配置文件简单的模型映射，快速能够得到想要的配置
+
+- 代码生成工具（即将push，demo已经发布可以体验了）
+
+- 表单构建工具（即将push，demo已经发布可以体验了）
+
+- TODO: 单元测试
 
 
-## 🎁 Built-in functions
+## 🎁 内置
 
-1.  User management: The user is the system operator. This function mainly completes the system user configuration.
-2.  Department management: configure the system organization (company, department, group), and display the tree structure to support data permissions.
-3.  Post management: Configure system users to hold positions.
-4.  Menu management: configure system menus, operation permissions, button permission labels, etc.
-5.  Role management: role menu permissions assignment, setting roles to divide data range permissions by organization.
-6.  Dictionary management: to maintain some fixed data often used in the system.
-7.  Parameter management: Dynamically configure common parameters for the system.
-8.  Operation log: system normal operation log record and query; system exception information log record and query.
-9.  Login log: The system login log record query contains login exceptions.
-10. System interface: Automatically generate related api interface documents according to business code.
+1.  用户管理：用户是系统操作者，该功能主要完成系统用户配置。
+2.  部门管理：配置系统组织机构（公司、部门、小组），树结构展现支持数据权限。
+3.  岗位管理：配置系统用户所属担任职务。
+4.  菜单管理：配置系统菜单，操作权限，按钮权限标识等。
+5.  角色管理：角色菜单权限分配、设置角色按机构进行数据范围权限划分。
+6.  字典管理：对系统中经常使用的一些较为固定的数据进行维护。
+7.  参数管理：对系统动态配置常用参数。
+8.  操作日志：系统正常操作日志记录和查询；系统异常信息日志记录和查询。
+9.  登录日志：系统登录日志记录查询包含登录异常。
+10. 系统接口：根据业务代码自动生成相关的api接口文档。
+11. 代码生成：根据数据表结构生成对应的增删改查相对应业务，全部可视化编程。
+12. 表单构建：自定义页面样式，拖拉拽实现页面布局。
 
-## Configuration details
+## 配置详情
 
-1. Configuration file description
+1. 配置文件说明
 ```yml
 settings:
   application:  
-    # Project launch environment         
+    # 项目启动环境            
     env: dev  
-    # When env: demo, prompts for request operations other than GET
+    # 当 env:demo 时，GET以外的请求操作提示
     envmsg: "谢谢您的参与，但为了大家更好的体验，所以本次提交就算了吧！" 
-    # Host IP or domain name, default 0.0.0.0
+    # 主机ip 或者域名，默认0.0.0.0
     host: 0.0.0.0 
-    # Whether to initialize the database structure and basic data; true: required; false: not required
+    # 是否需要初始化数据库结构以及基本数据；true：需要；false：不需要 
     isinit: false  
-    # JWT encrypted string
+    # JWT加密字符串
     jwtsecret: 123abc  
-    # log storage path
+    # log存放路径
     logpath: temp/logs/log.log   
-    # application name
+    # 服务名称
     name: go-admin   
-    # application port
+    # 服务端口
     port: 8000   
     readtimeout: 1   
     writertimeout: 2 
   database:
-    # database name
+    # 数据库名称
     database: dbname 
-    # database type
+    # 数据库类型
     dbtype: mysql    
-    # database host
+    # 数据库地址
     host: 127.0.0.1  
-    # database  password
+    # 数据库密码
     password: password  
-    # database port
+    # 数据库端口
     port: 3306       
-    # database username
+    # 数据库用户名
     username: root   
-  redis:
-    # redis addresss
+  # redis 可忽略
+  redis: 
+    # redis链接地址
     addr: 0.0.0.0:6379 
     # db 
     db: 0   
-    # password            
+    # 密码            
     password: password  
-    # read timeout
+    # 读超时时长
     readtimeout: 50     
 ```
 
-2. file path  go-admin/src/go-admin/config/settings.yml
+2. 文件路径  go-admin/config/settings.yml
 
 
-## 📦 evelopment
+## 📦 本地开发
 
-
-First start instructions
+首次启动说明
 
 ```bash
-# Get the code
+# 获取代码
 git clone https://github.com/wenjianzhang/go-admin.git
 
-# Enter working path
-cd ./go-admin/src/go-admin
+# 进入工作路径
+cd ./go-admin
 
-# Build the project
+# 编译项目
 go build
 
-# Change setting
-vi ./config/setting.yml (Note: Change isinit and database connection)
+# 修改配置
+vi ./config/setting.yml (更改isinit和数据库连接)
 
-# 1. Database information in the configuration file
-# Note: the corresponding configuration data under settings.database
-# 2. Confirm database initialization parameters
-# Note: If this is the first time settings.application.isinit is set, please set the current value to true, the system will automatically initialize the database structure and basic data information;
-# 3. Confirm the log path
+# 1. 配置文件中修改数据库信息 
+# 注意: settings.database 下对应的配置数据)
+# 2. 确认数据库初始化参数 
+# 注意: settings.application.isinit 如果是首次启动，请把当前值设置成true，系统会自动初始化数据库结构以及基本的数据信息；
+# 3. 确认log路径
 
 
-# Start the project or debug with the IDE
+# 启动项目，也可以用IDE进行调试
 ./go-admin
 
-# See also instructions in WIKI
+# 也可以在WIKI中查看说明
 ```
 
 
-Document generation
+
+文档生成
 ```bash
 swag init  
 ```
 
-If there is no `swag` command go get installed
+如果没有swag命令 go get安装一下即可
 ```bash
 go get -u github.com/swaggo/swag/cmd/swag
 ```
 
-
-Cross compilation
+交叉编译
 ```bash
 env GOOS=windows GOARCH=amd64 go build main.go
 
@@ -144,13 +153,13 @@ env GOOS=linux GOARCH=amd64 go build main.go
 ```
 
 
-## 🔗 Online Demo
+## 🔗 在线体验
 > admin  /  123456
 
-Demo address：[http://www.zhangwj.com](http://www.zhangwj.com/#/login)
+演示地址：[http://www.zhangwj.com](http://www.zhangwj.com/#/login)
 
 
-## 🤝 Open source projects used
+## 🤝 使用的开源项目
 [gin](https://github.com/gin-gonic/gin)
 
 [casbin](https://github.com/casbin/casbin)
@@ -168,20 +177,40 @@ Demo address：[http://www.zhangwj.com](http://www.zhangwj.com/#/login)
 [ruoyi-vue](https://gitee.com/y_project/RuoYi-Vue)
 
 
+## 版本
 
-## Version
+### 2020-04-1 新功能及bug修复
 
-#### 2020-03-15 New Features and Optimization
+1. 代码生成器
+2. 代码优化
+3. 已知bug修复
 
-1. Add user avatar upload
-2. Add user password modification
-3. Operation log page adjustment
-4. Optimize captcha background color
+#### 2020-03-15 新功能及优化
 
-I saw a lot of friends who experience the wrong verification code, so I adjusted the contrast for everyone to experience!
+1. 添加用户头像上传
+2. 添加用户密码修改
+3. 操作日志页面调整
+4. 优化验证码背景色
+
+看到好多体验的朋友验证码错误，所以调整了对比度，方便大家体验！
+
+## 互动
+
+<table>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/wenjianzhang/go-admin/master/demo/wx.png" width="180px"></td>
+    <td><img src="https://raw.githubusercontent.com/wenjianzhang/go-admin/master/demo/qq.png" width="200px"></td>
+  </tr>
+  <tr>
+    <td>微信</td>
+    <td>QQ</td>
+  </tr>
+</table>
+  
+<a target="_blank" href="https://shang.qq.com/wpa/qunwpa?idkey=1affb445445bd442312fcad9a927007db74a0cd4380bbc08a6c97d2691744869"><img border="0" src="https://pub.idqqimg.com/wpa/images/group.png" alt="go-admin技术交流" title="go-admin技术交流"></a>
 
 
-## 🤝 Thanks
+## 🤝 特别感谢
 [chengxiao](https://github.com/chengxiao)
 
 
@@ -190,5 +219,3 @@ I saw a lot of friends who experience the wrong verification code, so I adjusted
 [MIT](https://github.com/wenjianzhang/go-admin/blob/master/LICENSE.md)
 
 Copyright (c) 2020 wenjianzhang
-
-[中文]qq technical exchange group: 74520518

@@ -3,7 +3,6 @@ package models
 import (
 	orm "go-admin/database"
 	"go-admin/utils"
-	"time"
 )
 
 type DictType struct {
@@ -15,7 +14,7 @@ type DictType struct {
 	//状态
 	Status string `gorm:"column:status" json:"status"`
 
-	DataScope string `gorm:"_" json:"dataScope"`
+	DataScope string `gorm:"-" json:"dataScope"`
 
 	Params string `gorm:"column:params" json:"params"`
 	//创建者
@@ -33,7 +32,8 @@ type DictType struct {
 
 func (e *DictType) Create() (DictType, error) {
 	var doc DictType
-	e.CreateTime = time.Now().String()
+	e.CreateTime = utils.GetCurrntTime()
+	e.UpdateTime = utils.GetCurrntTime()
 	result := orm.Eloquent.Table("sys_dict_type").Create(&e)
 	if result.Error != nil {
 		err := result.Error
@@ -58,6 +58,26 @@ func (e *DictType) Get() (DictType, error) {
 	}
 
 	if err := table.Where("is_del = 0").First(&doc).Error; err != nil {
+		return doc, err
+	}
+	return doc, nil
+}
+
+func (e *DictType) GetList() ([]DictType, error) {
+	var doc []DictType
+
+	table := orm.Eloquent.Table("sys_dict_type")
+	if e.DictId != 0 {
+		table = table.Where("dictId = ?", e.DictId)
+	}
+	if e.DictName != "" {
+		table = table.Where("dictName = ?", e.DictName)
+	}
+	if e.DictType != "" {
+		table = table.Where("dictType = ?", e.DictType)
+	}
+
+	if err := table.Where("is_del = 0").Find(&doc).Error; err != nil {
 		return doc, err
 	}
 	return doc, nil
@@ -89,7 +109,7 @@ func (e *DictType) GetPage(pageSize int, pageIndex int) ([]DictType, int32, erro
 }
 
 func (e *DictType) Update(id int64) (update DictType, err error) {
-	e.UpdateTime = time.Now().String()
+	e.UpdateTime = utils.GetCurrntTime()
 	if err = orm.Eloquent.Table("sys_dict_type").First(&update, id).Error; err != nil {
 		return
 	}
